@@ -12,7 +12,7 @@ const app: Application = express();
 // * so, I have to add this manually
 declare module "express-session" {
   interface SessionData {
-    visited?: boolean;
+    user?: { name: string; email: string };
   }
 }
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
