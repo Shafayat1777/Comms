@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, loginStatus } from "../controllers/loginController";
+import { login, register, loginStatus } from "../controllers/authController";
 
 const router = Router();
 
@@ -30,7 +30,8 @@ const router = Router();
  *                     description: The user's name.
  *                     example: John Doe
  */
-router.post("/", loginUser);
+router.post("/login", login);
+router.post("/register", register);
 router.get("/status", loginStatus);
 
 

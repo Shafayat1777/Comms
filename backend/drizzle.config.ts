@@ -1,4 +1,4 @@
-import { DATABASE_URL } from "./src/lib/secret";
+import { DATABASE_URL } from "./src/db/secret/secret";
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
