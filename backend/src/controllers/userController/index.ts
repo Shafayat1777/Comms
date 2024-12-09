@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { getUserById, getUsers } from "./service";
 
 // GET ALL USERS
-export const getAllUsers = (req: Request, res: Response) => {
+export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = getUsers();
+    const users = await getUsers();
+    console.log(users);
     res.status(200).json(users);
   } catch (error: unknown) {
     res.status(500).json({ message: "Server error", error: error });

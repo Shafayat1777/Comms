@@ -1,16 +1,9 @@
+import { getAllUsers } from "../../models/userModel";
+
 // GET ALL USERS
-export const getUsers = () => {
-  // Implement logic to fetch all users
-  return [
-    {
-      id: "1",
-      name: "John Doe",
-    },
-    {
-      id: "2",
-      name: "Jane Doe",
-    },
-  ];
+export const getUsers = async () => {
+  const users = await getAllUsers();
+  return users;
 };
 
 // GET USER BY ID
