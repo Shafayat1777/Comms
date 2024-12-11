@@ -1,3 +1,4 @@
+import { error } from "console";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -9,18 +10,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#092635",
+        // foreground: "var(--foreground)",
         primary: {
-          DEFAULT: "#1D4ED8", // The default shade
-          light: "#60A5FA", // Lighter shade
-          dark: "#1E40AF", // Darker shade
+          DEFAULT: "#5C8374", // The default shade
+          light: "#9EC8B9", // Lighter shade
+          dark: "#1B4242", // Darker shade
         },
         secondary: {
           DEFAULT: "#D97706",
           light: "#FBBF24",
           dark: "#92400E",
         },
+        error: "#EF4444",
       },
     },
   },

@@ -29,13 +29,10 @@ const Navbar = () => {
   ];
 
   return (
-    <div className=" p-4 border-b border-slate-400 ">
+    <div className=" p-4 border-b border-primary-light ">
       <div className="grid grid-cols-3 items-center ">
         {/* LOGO */}
-        <Link
-          href="/"
-          className={`${MonoTon.className} text-4xl text-emerald-600 text-center `}
-        >
+        <Link href="/" className={`${MonoTon.className} text-4xl text-center `}>
           COMMS
         </Link>
 
@@ -45,7 +42,7 @@ const Navbar = () => {
             <Link
               href={item.href}
               key={index}
-              className=" rounded-sm p-2 border-2 border-emerald-600 hover:bg-emerald-600 text-emerald-600  hover:text-white  transition-all duration-200 ease-in "
+              className=" rounded-sm p-2 border-2 font-semibold  border-primary-light hover:bg-primary-light hover:text-primary-dark  transition-all duration-200 ease-in "
             >
               {item.name}
             </Link>
@@ -58,7 +55,7 @@ const Navbar = () => {
             <Link
               href={item.href}
               key={index}
-              className=" rounded-full p-2 border-2 border-emerald-600 hover:bg-emerald-600 text-emerald-600  hover:text-white  transition-all duration-200 ease-in "
+              className=" rounded-full p-2 border-2 border-primary-light hover:bg-primary-light  hover:text-primary-dark  transition-all duration-200 ease-in "
             >
               {item.name}
             </Link>
