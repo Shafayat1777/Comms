@@ -1,19 +1,13 @@
-"use client";
-
-import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Calendar } from "@/components/calendar";
 
 export default function Home() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
   return (
-    <div className="">
-      {" "}
-      <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        className="rounded-md border shadow "
-      />
+    <div>
+      <Button>Click me</Button>
+      <ModeToggle />
+      <Calendar />
     </div>
   );
 }
