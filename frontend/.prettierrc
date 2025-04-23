@@ -2,5 +2,6 @@
   "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-classnames", "@trivago/prettier-plugin-sort-imports"],
   "importOrder": ["^react", "^next", "<THIRD_PARTY_MODULES>", "^@/.*", "^[./]"],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "singleQuote": true
 }
