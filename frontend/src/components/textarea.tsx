@@ -10,6 +10,8 @@ export const TextArea: React.FC<IInput> = ({
   placeholder = '',
   name = '',
   icon: Icon,
+  value = '',
+  onChange = () => {},
 }) => {
   return (
     <div className={cn(`w-full`, className)}>
@@ -24,6 +26,8 @@ export const TextArea: React.FC<IInput> = ({
           name={name}
           placeholder={placeholder}
           className={cn(`w-full`, Icon && 'pl-10', inputClassName)}
+          value={value}
+          onChange={onChange}
         />
       </div>
     </div>

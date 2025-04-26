@@ -16,4 +16,6 @@ export type IInput = {
   label?: string;
   name?: string;
   icon?: LucideIcon;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };

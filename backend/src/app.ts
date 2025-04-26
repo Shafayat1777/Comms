@@ -5,6 +5,7 @@ import swaggerSpec from "./config/swaggerConfig";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import  http  from "http";
+import cors from "cors";
 import { Server as Socket } from "socket.io";
 const app: Application = express();
 
@@ -18,7 +19,7 @@ declare module "express-session" {
   }
 }
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -44,5 +45,21 @@ const io = new Socket(server, {
   cors: { origin: '*' },
 });
 
+io.on('connection', (socket) => {
+  console.log('Socket connected:', socket.id);
 
-export default app;
+  socket.on('joinRoom', ({chatId, user}) => {
+    socket.join(chatId);
+    console.log(`User ${user} joined room: ${chatId}`);
+
+    // Notify others in the room
+    socket.to(chatId).emit('chat', {content:`User ${user} joined ${chatId}`, senderId: user, type: 'join'});
+  });
+
+  socket.on('sendMessage', ({ chatId, content, senderId }) => {
+    io.to(chatId).emit('chat', {content, senderId: senderId, type: 'message'});
+    console.log(`User ${socket.id} sent message: ${content} in room: ${chatId}`);
+  });
+});
+
+export default server;
