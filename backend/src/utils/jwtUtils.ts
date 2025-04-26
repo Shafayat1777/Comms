@@ -2,8 +2,8 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { envConfig } from "../config/envConfig";
 
 export const generateToken = (payload: object): string => {
-  return jwt.sign(payload, envConfig.jwtSecret, {
-    expiresIn: envConfig.jwtExpiresIn,
+  return jwt.sign(payload, envConfig.jwtSecret , {
+    expiresIn:'1h' ,
   });
 };
 

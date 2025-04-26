@@ -8,6 +8,7 @@ import {
   Send,
   Smile,
   Users,
+  Video,
 } from 'lucide-react';
 
 import { Avatar } from '@/components/avatar';
@@ -69,6 +70,25 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col ">
+        <div className="p-4 border-b flex items-center gap-4">
+          <Avatar className="w-12 h-12" />
+          <div>
+            <h3>John Doe</h3>
+            <p className="text-sm text-muted-foreground">
+              last seen 3 hours ago
+            </p>
+          </div>
+
+          <div className="p-3 rounded hover:bg-primary-foreground cursor-pointer transition">
+            <Phone className="w-5 h-5" />
+          </div>
+          <div className="p-3 rounded hover:bg-primary-foreground cursor-pointer transition">
+            <Video className="w-5 h-5" />
+          </div>
+          <div className="p-3 rounded hover:bg-primary-foreground cursor-pointer transition">
+            <Ellipsis className="w-5 h-5" />
+          </div>
+        </div>
         <div className="flex-1">asda</div>
         <div className="p-4 border-t flex gap-4 items-end">
           <div className="p-3 rounded hover:bg-primary-foreground cursor-pointer transition items-center">
