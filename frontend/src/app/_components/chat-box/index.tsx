@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 import { useParams, useSearchParams } from 'next/navigation';
 
-import { IMessage } from '@/types';
 import socket from '@/utils/socket';
 
 import ChatInput from './chat-input';

@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { IChatMessage } from '@/types';
+
 
 const MessageBox: React.FC<IChatMessage> = ({ data, user }) => {
   return (

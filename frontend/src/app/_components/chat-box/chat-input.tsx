@@ -1,7 +1,6 @@
 import { Paperclip, Send, Smile } from 'lucide-react';
 
 import { TextArea } from '@/components/textarea';
-import { IChatInputProps } from '@/types';
 
 const ChatInput: React.FC<IChatInputProps> = ({
   handleSend,

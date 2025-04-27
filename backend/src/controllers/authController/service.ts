@@ -8,6 +8,7 @@ export const registerUser = async (
   password: string
 ) => {
   const hashedPassword = await bcrypt.hash(password, 10);
+ 
   const user = { name, email, password: hashedPassword };
 
   const result = await insertUser(user);
@@ -16,11 +17,10 @@ export const registerUser = async (
 };
 
 export const loginUser = async (
-  name: string,
   email: string,
   password: string
 ) => {
-  const user = await getUser({ name, email, password });
+  const user = await getUser(email);
   if (!user) throw new Error("User not found");
 
   const isMatch = await bcrypt.compare(password, user.password);
@@ -33,5 +33,5 @@ export const loginUser = async (
     role: user.role,
   });
 
-  return { token, user };
+  return { token, name: user.name, email: user.email };
 };

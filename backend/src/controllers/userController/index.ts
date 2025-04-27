@@ -5,7 +5,6 @@ import { getUserById, getUsers } from "./service";
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await getUsers();
-    console.log(users);
     res.status(200).json(users);
   } catch (error: unknown) {
     res.status(500).json({ message: "Server error", error: error });
@@ -13,12 +12,12 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 // GET USER BY ID
-export const getUser = (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   const query = req.query;
 
   try {
-    const user = getUserById(id, query);
+    const user = await getUserById(id, query);
     if (!user) {
       res.status(404).json({ message: "User not found" });
     } else {

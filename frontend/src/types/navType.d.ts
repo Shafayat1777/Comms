@@ -1,0 +1,3 @@
+type IModeToggle = {
+    className?: string;
+}

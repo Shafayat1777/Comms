@@ -1,44 +1,21 @@
-import { getAllUsers } from "../../models/userModel";
+import { getAllUsers, getUser } from "../../models/userModel";
 
 // GET ALL USERS
 export const getUsers = async () => {
   const users = await getAllUsers();
+  
   return users;
 };
 
 // GET USER BY ID
-export const getUserById = (
-  userId: string,
+export const getUserById = async (
+  email: string,
   query?: {
     sort?: string;
     filter?: string;
   }
 ) => {
-  // Implement logic to fetch user by ID
+  const users = await getUser(email);
 
-  return {
-    id: userId,
-    name: "John Doe",
-    query,
-  };
+  return users;
 };
-
-// export const createUser = async (userData: Partial<User>): Promise<User> => {
-//   // Implement logic to create a new user
-//   const user = new User(userData);
-//   return await user.save();
-// };
-
-// export const updateUser = async (
-//   userId: string,
-//   updateData: Partial<User>
-// ): Promise<User | null> => {
-//   // Implement logic to update user by ID
-//   return await User.findByIdAndUpdate(userId, updateData, { new: true }).exec();
-// };
-
-// export const deleteUser = async (userId: string): Promise<boolean> => {
-//   // Implement logic to delete user by ID
-//   const result = await User.findByIdAndDelete(userId).exec();
-//   return result !== null;
-// };

@@ -3,6 +3,7 @@ import { registerUser, loginUser } from "./service";
 
 export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
+
   try {
     const result = await registerUser(name, email, password);
     res.status(201).json(result);
@@ -12,9 +13,9 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const {  email, password } = req.body;
   try {
-    const result = await loginUser(name, email, password);
+    const result = await loginUser( email, password);
 
     req.session.user = result.token;
 
