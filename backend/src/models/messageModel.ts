@@ -1,6 +1,6 @@
 import db from "@/db";
 import * as schema from "../db/schema";
-import { eq, ne, gt, gte } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 type messageType = typeof schema.messages.$inferInsert;
 
@@ -9,7 +9,11 @@ export const insertMessage = async (value: messageType) => {
 };
 
 export const getAllMessages = async () => {
-  return await db.select().from(schema.messages);
+  return (await db.select().from(schema.messages).orderBy(desc(schema.messages.timestamp)));
+};
+
+export const getAllMessagesById = async (id: string) => {
+  return (await db.select().from(schema.messages).where(eq(schema.messages.chatId, id)).orderBy(desc(schema.messages.timestamp)));
 };
 
 export const getMessage = async (id: string, query?: { sort?: string; filter?: string }) => {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllMessages, getMessage, insertMessage } from "@/models/messageModel";
+import { getAllMessages, getAllMessagesById, getMessage, insertMessage } from "@/models/messageModel";
 
 // * GET ALL MESSAGES
 export const getAllMessagesController = async (req: Request, res: Response) => {
@@ -12,13 +12,13 @@ export const getAllMessagesController = async (req: Request, res: Response) => {
   }
 };
 
-// GET MESSAGE BY ID
-export const getSingleMessageController = (req: Request, res: Response) => {
+// * GET MESSAGE BY ID
+export const getSingleMessageController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const query = req.query;
 
   try {
-    const message = getMessage(id, query);
+    const message = await getMessage(id, query);
     if (!message) {
       res.status(404).json({ message: "Message not found" });
     } else {
@@ -29,6 +29,24 @@ export const getSingleMessageController = (req: Request, res: Response) => {
   }
 };
 
+// * GET ALL MESSAGE BY ID
+export const getAllMessageByIdController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const query = req.query;
+
+  try {
+    const message = await getAllMessagesById(id);
+    if (!message) {
+      res.status(404).json({ message: "Message not found" });
+    } else {
+      res.status(200).json(message);
+    }
+  } catch (error: unknown) {
+    res.status(500).json({ message: "Server error", error: error });
+  }
+};
+
+// * CREATE MESSAGE
 export const createMessageController = async (req: Request, res: Response) => {
   const value = req.body;
   try {

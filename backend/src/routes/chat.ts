@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getChatRoom, getAllChatRooms, createChatRooms } from "../controllers/chatRoomController";
 import { createChatMembers, getAllChatMembers, getChatMember } from "../controllers/chatMemberController";
-import { createMessageController, getAllMessagesController, getSingleMessageController } from "../controllers/messageController";
+import { createMessageController, getAllMessageByIdController, getAllMessagesController, getSingleMessageController } from "../controllers/messageController";
 
 const router = Router();
 
@@ -18,6 +18,7 @@ router.post("/chat-members", createChatMembers);
 // * CHAT MESSAGES
 router.get("/chat-messages", getAllMessagesController);
 router.get("/chat-messages/:id", getSingleMessageController);
+router.get("/chat-messages/all/:id", getAllMessageByIdController);
 router.post("/chat-messages", createMessageController);
 
 export default router;
