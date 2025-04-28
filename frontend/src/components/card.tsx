@@ -25,7 +25,7 @@ const Card: React.FC<ICard> = ({
                 <CardDescription>{description}</CardDescription>
             </CardHeader>
             <CardContent>{children}</CardContent>
-            <CardFooter className="flex justify-between">{footer}</CardFooter>
+            <CardFooter className="">{footer}</CardFooter>
         </CardPrimitive>
     );
 };

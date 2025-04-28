@@ -6,21 +6,21 @@ import { useEffect } from 'react';
 
 // import axios from 'axios';
 
-import socket from '@/utils/socket';
+import socket from '@/lib/socket';
 
 export default function Page() {
-  useEffect(() => {
-    // if (!chatId) return;
+    useEffect(() => {
+        // if (!chatId) return;
 
-    socket.emit('joinRoom', '123');
+        socket.emit('joinRoom', '123');
 
-    // socket.on('receiveMessage', (msg) => {
-    //   setMessages((prev) => [...prev, msg]);
-    // });
+        // socket.on('receiveMessage', (msg) => {
+        //   setMessages((prev) => [...prev, msg]);
+        // });
 
-    // return () => {
-    //   socket.off('receiveMessage');
-    // };
-  }, []);
-  return <div>Chat</div>;
+        // return () => {
+        //   socket.off('receiveMessage');
+        // };
+    }, []);
+    return <div>Chat</div>;
 }

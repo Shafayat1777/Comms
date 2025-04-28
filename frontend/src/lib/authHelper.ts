@@ -1,21 +1,20 @@
 import { jwtDecode } from 'jwt-decode';
-
-interface DecodedToken {
-    id: string;
-    username: string;
-    email: string;
-}
+import { toast } from 'sonner';
 
 export const getUserFromToken = (token: string) => {
     try {
-        const decoded = jwtDecode<DecodedToken>(token);
+        const decoded = jwtDecode<IUser>(token);
         return {
             id: decoded.id,
-            username: decoded.username,
+            name: decoded.name,
             email: decoded.email,
+            role: decoded.role,
         };
     } catch {
-        console.error('Invalid token');
+        toast.error('Invalid Token!', {
+            position: 'top-center',
+            duration: 3000,
+        });
         return null;
     }
 };

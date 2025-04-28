@@ -2,6 +2,8 @@
 
 import { ReactNode, createContext, useEffect, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import Cookies from 'js-cookie';
 
 import { getUserFromToken } from '@/lib/authHelper';
@@ -15,7 +17,8 @@ export default function AuthContextProvider({
 }: {
     children: ReactNode;
 }) {
-    const [user, setUser] = useState<User | null>(null);
+    const router = useRouter();
+    const [user, setUser] = useState<IUser | null>(null);
     const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
@@ -24,8 +27,10 @@ export default function AuthContextProvider({
             setToken(storedToken);
             const decodedUser = getUserFromToken(storedToken);
             if (decodedUser) setUser(decodedUser);
+        } else {
+            router.push('/login');
         }
-    }, []);
+    }, [router]);
 
     const login = (newToken: string) => {
         Cookies.set('c-auth', newToken, { expires: 7 });

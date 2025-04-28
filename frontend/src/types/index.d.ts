@@ -14,10 +14,11 @@ type IChatMessage = {
     user: string | null;
 };
 
-type User = {
+type IUser = {
     id: string;
-    username: string;
+    name: string;
     email: string;
+    role: string;
 };
 
 type AuthContextType = {
@@ -26,3 +27,11 @@ type AuthContextType = {
     login: (token: string) => void;
     logout: () => void;
 };
+
+type IRegistrationForm = {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+};
+
