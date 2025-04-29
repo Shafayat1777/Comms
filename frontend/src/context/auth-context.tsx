@@ -5,6 +5,7 @@ import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Cookies from 'js-cookie';
+import { toast } from 'sonner';
 
 import { getUserFromToken } from '@/lib/authHelper';
 
@@ -43,6 +44,11 @@ export default function AuthContextProvider({
         Cookies.remove('c-auth');
         setUser(null);
         setToken(null);
+        toast.warning("You've been logged out", {
+            position: 'top-center',
+            duration: 3000,
+        });
+        router.push('/login');
     };
 
     return (

@@ -35,3 +35,9 @@ type IRegistrationForm = {
     confirmPassword: string;
 };
 
+type IChatRoom = {
+    id: string;
+    name: string;
+    isGroup: boolean;
+    createdAt: Date;
+};

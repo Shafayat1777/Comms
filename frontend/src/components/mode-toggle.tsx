@@ -3,7 +3,6 @@
 import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import type { IModeToggle } from "../types/navType";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,7 +17,7 @@ export const ModeToggle: React.FC<IModeToggle> = ({ className = "" }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className={cn(className)}>
+      <DropdownMenuTrigger asChild className={cn(`rounded`,className)}>
         <Button variant="outline" size="icon">
           <Sun
             className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90

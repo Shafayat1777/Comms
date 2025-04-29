@@ -45,5 +45,6 @@ type IButton = {
     loading?: boolean;
     disabled?: boolean;
     icon?: LucideIcon;
+    onClick?: () => void;
     children: React.ReactNode;
 };

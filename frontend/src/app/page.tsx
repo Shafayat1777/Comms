@@ -1,6 +1,7 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Home() {
@@ -12,9 +13,12 @@ export default function Home() {
                 <span className="font-semibold text-primary">{user?.name}</span>
             </h1>
 
-            <Button className="text-xl font-semibold rounded">
+            <Link
+                href="/chat"
+                className="text-xl font-semibold rounded bg-primary-foreground px-3 py-2"
+            >
                 Go to chat
-            </Button>
+            </Link>
         </div>
     );
 }

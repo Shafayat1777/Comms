@@ -38,8 +38,6 @@ export default function Page() {
             if (res.data.type === 'success') {
                 login(res.data.token); // save token into context + localStorage
                 toast.success(res.data.message, {
-                    description:
-                        'You have successfully logged in. Redirecting to home page...',
                     position: 'top-center',
                     duration: 4000,
                 });

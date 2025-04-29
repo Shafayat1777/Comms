@@ -44,7 +44,7 @@ export const login = async (req: Request, res: Response) => {
         req.session.user = token;
 
         res.status(200).json({
-            massage: 'User logged in successfully',
+            message: 'User logged in successfully',
             token,
             type: 'success',
         });
