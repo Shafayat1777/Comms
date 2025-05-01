@@ -1,3 +1,4 @@
+import { IMessage } from './data';
 
 type IChatInputProps = {
     handleSend: () => void;
@@ -5,11 +6,6 @@ type IChatInputProps = {
     setInput: React.Dispatch<React.SetStateAction<string>>;
 };
 
-type IMessage = {
-    type: string;
-    content: string;
-    senderId: string;
-};
 type IChatMessage = {
     data: IMessage[];
     user: string | null;

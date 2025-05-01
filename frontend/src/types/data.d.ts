@@ -36,3 +36,10 @@ type IChatRoomPostData = {
 type IChatRoomResponse = {
     message: string;
 };
+
+// ? Chat-message
+type IMessage = {
+    type: string;
+    content: string;
+    senderId: string;
+};

@@ -1,12 +1,14 @@
 import { Router } from 'express';
 
+import { authMiddleware } from '@/middleware/authMiddleware';
+
 import {
     createChatMembers,
     getAllChatMembers,
     getChatMember,
 } from '../controllers/chatMemberController';
 import {
-    createChatRooms,
+    createChatRoomsController,
     getAllChatRoomsController,
     getChatRoomByIdController,
 } from '../controllers/chatRoomController';
@@ -22,7 +24,7 @@ const router = Router();
 // * CHAT ROOMS
 router.get('/chat-rooms', getAllChatRoomsController);
 router.get('/chat-rooms/:id', getChatRoomByIdController);
-router.post('/chat-rooms', createChatRooms);
+router.post('/chat-rooms', authMiddleware, createChatRoomsController);
 
 // * CHAT MEMBERS
 router.get('/chat-members', getAllChatMembers);

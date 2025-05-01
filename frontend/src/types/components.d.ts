@@ -9,16 +9,17 @@ type IAvatar = {
 };
 
 type IInput = {
-    className?: string;
-    inputClassName?: string;
     type?: string;
     placeholder?: string;
+    className?: string;
+    inputClassName?: string;
     label?: string;
     name?: string;
-    icon?: LucideIcon;
     value?: string;
-    showPassword?: boolean;
+    disabled?: boolean;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    icon?: LucideIcon;
+    showPassword?: boolean;
 };
 
 type ICheckBox = {
@@ -26,8 +27,9 @@ type ICheckBox = {
     inputClassName?: string;
     label?: string;
     name?: string;
-    value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLButtonElement>) => void;
+    value?: boolean;
+    disabled?: boolean;
+    onChange?: () => void;
 };
 
 type ITextArea = {

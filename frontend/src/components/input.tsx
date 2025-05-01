@@ -15,12 +15,17 @@ export const Input: React.FC<IInput> = ({
     label = '',
     showPassword = false,
     icon: Icon,
-    ...props
+    name = '',
+    value = '',
+    placeholder = '',
+    type = 'text',
+    disabled = false,
+    onChange = () => {},
 }) => {
     const [show, setShow] = useState(false);
     return (
         <div className={cn(`w-full flex flex-col gap-2`, className)}>
-            {label && <Label htmlFor={props.name}>{label}</Label>}
+            {label && <Label htmlFor={name}>{label}</Label>}
             <div className="relative">
                 {Icon && (
                     <div className="absolute inset-y-0 left-3 flex items-center text-muted-foreground pointer-events-none">
@@ -28,9 +33,17 @@ export const Input: React.FC<IInput> = ({
                     </div>
                 )}
                 <InputPrimitive
-                    className={cn(`w-full rounded`, Icon && 'pl-10', inputClassName)}
-                    {...props}
-                    type={show ? 'text' : props.type}
+                    className={cn(
+                        `w-full rounded`,
+                        Icon && 'pl-10',
+                        inputClassName,
+                    )}
+                    type={show ? 'text' : type}
+                    placeholder={placeholder}
+                    name={name}
+                    value={value}
+                    disabled={disabled}
+                    onChange={onChange}
                 />
                 {showPassword && (
                     <div

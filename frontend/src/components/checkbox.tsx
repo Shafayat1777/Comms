@@ -10,12 +10,20 @@ const Checkbox: React.FC<ICheckBox> = ({
     className = '',
     inputClassName = '',
     label = '',
-    ...props
+    name = '',
+    value = false,
+    disabled = false,
+    onChange = () => {},
 }) => {
     return (
         <div className={cn(`flex items-center space-x-2`, className)}>
-            <CheckboxPrimitive className={cn('cursor-pointer',inputClassName)} {...props} />
-            {label && <Label htmlFor={props.name}>{label}</Label>}
+            <CheckboxPrimitive
+                className={cn('cursor-pointer', inputClassName)}
+                checked={value}
+                onCheckedChange={onChange}
+                disabled={disabled}
+            />
+            {label && <Label htmlFor={name}>{label}</Label>}
         </div>
     );
 };

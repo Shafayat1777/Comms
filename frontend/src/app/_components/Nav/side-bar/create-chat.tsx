@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Button from '@/components/button';
 import Checkbox from '@/components/checkbox';
 import { Input } from '@/components/input';
-import { api } from '@/lib/axios';
+import { api, apiError } from '@/lib/axios';
 import { Toast } from '@/lib/toast';
 import { IChatRoomPostData, IChatRoomResponse } from '@/types/data';
 
@@ -13,21 +13,24 @@ const CreateChat = () => {
     const [formData, setFormData] = useState({ name: '', isGroup: false });
     const [loading, setLoading] = useState(false);
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLButtonElement>,
-    ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
         }));
     };
 
+    const handleCheckboxChange = () => {
+        setFormData((prev) => ({
+            ...prev,
+            isGroup: !formData.isGroup,
+        }));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        console.log(formData);
         setLoading(true);
-        return;
+
         try {
             const res = await api<IChatRoomPostData, IChatRoomResponse>({
                 type: 'post',
@@ -41,7 +44,7 @@ const CreateChat = () => {
                 Toast(res.data.toast);
             }
         } catch (error: unknown) {
-            console.log('Create chat error:', error);
+            apiError(error);
         } finally {
             setLoading(false);
         }
@@ -57,9 +60,16 @@ const CreateChat = () => {
                 name="name"
                 placeholder="Chat name..."
                 value={formData.name}
+                disabled={loading}
                 onChange={handleChange}
             />
-            <Checkbox label="Is Group chat?" name="isGroup" />
+            <Checkbox
+                label="Is Group chat?"
+                name="isGroup"
+                value={formData.isGroup}
+                disabled={loading}
+                onChange={handleCheckboxChange}
+            />
             <Button className="rounded" disabled={loading} loading={loading}>
                 {loading ? 'Creating' : 'Create'}
             </Button>

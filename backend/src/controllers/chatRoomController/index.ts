@@ -1,13 +1,15 @@
 import { Request, Response } from 'express';
 
+import { insertChatMember } from '@/models/chatMemberModel';
+
 import {
     getAllChatRooms,
     getChatRoom,
     insertChatRoom,
 } from '../../models/chatRoomModel';
-import { createChatRoom, getChatRoomById } from './service';
+import { chatRoomSchema } from './zod';
 
-// GET ALL USERS
+// GET ALL CHAT ROOM
 export const getAllChatRoomsController = async (
     req: Request,
     res: Response,
@@ -24,30 +26,59 @@ export const getAllChatRoomsController = async (
     }
 };
 
-// GET USER BY ID
-export const getChatRoomByIdController = (req: Request, res: Response) => {
+// GET CHAT ROOM BY ID
+export const getChatRoomByIdController = async (
+    req: Request,
+    res: Response,
+) => {
     const { id } = req.params;
     const query = req.query;
 
     try {
-        const user = getChatRoomById(id, query);
-        if (!user) {
+        const chatRoom = await getChatRoom(id);
+        if (!chatRoom) {
             res.status(404).json({ message: 'User not found' });
         } else {
-            res.status(200).json(user);
+            res.status(200).json(chatRoom);
         }
     } catch (error: unknown) {
         res.status(500).json({ message: 'Server error', error: error });
     }
 };
 
-export const createChatRooms = async (req: Request, res: Response) => {
-    const value = req.body;
+// CREATE CHAT ROOM
+export const createChatRoomsController = async (
+    req: Request,
+    res: Response,
+) => {
     try {
-        const newChatRoom = await createChatRoom(value);
+        const { name, isGroup } = chatRoomSchema.parse(req.body);
 
-        res.status(201).json(newChatRoom);
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error });
+        const value = { name, isGroup };
+
+        const newChatRoom = await insertChatRoom(value);
+        const newChatMember = await insertChatMember({
+            chatId: newChatRoom[0].id,
+            userId: req.user?.id || '',
+            isAdmin: true,
+        });
+
+        res.status(201).json({
+            message: 'Chat Room created successfully!',
+            toast: {
+                type: 'success',
+                status: 201,
+                message: 'Chat Room created successfully!',
+            },
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            toast: {
+                type: 'error',
+                status: 401,
+                message: error.message,
+                error: error,
+            },
+        });
     }
 };

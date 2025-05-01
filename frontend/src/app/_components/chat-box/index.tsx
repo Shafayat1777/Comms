@@ -5,7 +5,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import { useAuth } from '@/hooks/useAuth';
+import { api } from '@/lib/axios';
 import socket from '@/lib/socket';
+import { IMessage } from '@/types/data';
 
 import ChatInput from './chat-input';
 import Header from './header';
@@ -19,12 +21,26 @@ export default function Index() {
     const [messages, setMessages] = useState<IMessage[]>([]);
 
     useEffect(() => {
+        if (!user) return;
+
+        const getMessages = async () => {
+            const res = await api<undefined, IMessage[]>({
+                type: 'get',
+                url: `chat/chat-messages/all/${chatId}`,
+            });
+
+            setMessages(res.data.data);
+        };
+
+        getMessages();
+    }, [user, chatId]);
+
+    useEffect(() => {
         if (!chatId) return;
 
         socket.emit('joinRoom', { chatId, user: user?.id });
 
         socket.on('chat', (content) => {
-            console.log(content);
             setMessages((prev) => [
                 ...prev,
                 {
@@ -36,20 +52,16 @@ export default function Index() {
         });
 
         return () => {
-            socket.off('receiveMessage');
+            socket.off('chat');
         };
     }, [chatId, user]);
-
-    useEffect(() => {
-        
-    }, [])
 
     const handleSend = () => {
         if (!input.trim()) return;
 
         const msg = {
             chatId,
-            senderId: user,
+            senderId: user.id,
             content: input,
         };
 
@@ -58,7 +70,7 @@ export default function Index() {
     };
 
     return (
-        <div className="flex flex-col col-span-2">
+        <div className="flex flex-col col-span-2 justify-between">
             <Header user={user?.name} />
             <MessageBox data={messages} user={user?.id} />
             <ChatInput

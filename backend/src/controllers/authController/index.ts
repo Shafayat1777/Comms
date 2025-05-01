@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 
+import { generateToken } from '../../lib/jwtUtils';
 import { getUser, insertUser } from '../../models/userModel';
-import { generateToken } from '../../utils/jwtUtils';
 import { registerSchema } from './zod';
 
 export const register = async (req: Request, res: Response) => {
