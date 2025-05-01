@@ -28,7 +28,7 @@ export const Input: React.FC<IInput> = ({
                     </div>
                 )}
                 <InputPrimitive
-                    className={cn(`w-full`, Icon && 'pl-10', inputClassName)}
+                    className={cn(`w-full rounded`, Icon && 'pl-10', inputClassName)}
                     {...props}
                     type={show ? 'text' : props.type}
                 />

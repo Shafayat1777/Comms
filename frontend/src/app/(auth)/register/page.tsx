@@ -5,12 +5,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { toast } from 'sonner';
-
 import Button from '@/components/button';
 import Card from '@/components/card';
 import { Input } from '@/components/input';
-import axios from '@/lib/axios';
+import { api } from '@/lib/axios';
+import { Toast } from '@/lib/toast';
+import { IRegistrationPostData, IRegistrationResponse } from '@/types/data';
 
 export default function Page() {
     const router = useRouter();
@@ -34,29 +34,22 @@ export default function Page() {
         setLoading(true);
 
         try {
-            const res = await axios.post('auth/register', formData);
+            const res = await api<IRegistrationPostData, IRegistrationResponse>(
+                {
+                    type: 'post',
+                    url: 'auth/register',
+                    data: formData,
+                },
+            );
 
-            if (res.data?.type === 'success') {
-                toast.success('Registered successfully', {
-                    description: 'You can now log in. Redirecting to login...',
-                    position: 'top-center',
-                    duration: 4000,
-                });
+            if (res.data.toast.type === 'success') {
+                Toast(res.data.toast);
                 router.push('/login');
-            } else if (res.data?.type === 'error') {
-                toast.error(res.data.message, {
-                    description: 'Error! Please try again',
-                    position: 'top-center',
-                    duration: 3000,
-                });
+            } else if (res.data.toast.type === 'error') {
+                Toast(res.data.toast);
             }
         } catch (error: unknown) {
-            console.error('Login error:', error);
-            toast.error('Something went wrong', {
-                description: 'Error! Please try again',
-                position: 'top-center',
-                duration: 3000,
-            });
+            console.error('Registration error:', error);
         } finally {
             setLoading(false);
         }
@@ -119,7 +112,7 @@ export default function Page() {
                         showPassword
                     />
                     <Button className="rounded" disabled={loading}>
-                        Login
+                        Register
                     </Button>
                 </form>
             </Card>

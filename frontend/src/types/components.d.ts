@@ -21,6 +21,15 @@ type IInput = {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
+type ICheckBox = {
+    className?: string;
+    inputClassName?: string;
+    label?: string;
+    name?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLButtonElement>) => void;
+};
+
 type ITextArea = {
     className?: string;
     inputClassName?: string;
@@ -47,4 +56,17 @@ type IButton = {
     icon?: LucideIcon;
     onClick?: () => void;
     children: React.ReactNode;
+};
+
+type IToast = {
+    type: 'success' | 'error' | 'warning';
+    message: string;
+    status: number;
+    error?: unknown;
+};
+
+type IPopover = {
+    className?: string;
+    button?: React.ReactNode;
+    children?: React.ReactNode;
 };

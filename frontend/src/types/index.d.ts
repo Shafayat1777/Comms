@@ -1,3 +1,4 @@
+
 type IChatInputProps = {
     handleSend: () => void;
     input?: string;
@@ -22,7 +23,7 @@ type IUser = {
 };
 
 type AuthContextType = {
-    user: User | null;
+    user: IUser | null;
     token: string | null;
     login: (token: string) => void;
     logout: () => void;
@@ -40,4 +41,10 @@ type IChatRoom = {
     name: string;
     isGroup: boolean;
     createdAt: Date;
+};
+
+type IApi<T> = {
+    type: 'get' | 'post' | 'put' | 'patch' | 'delete';
+    url: string;
+    data?: T;
 };

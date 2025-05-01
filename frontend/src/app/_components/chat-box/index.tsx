@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-import { useParams, useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
+import { useAuth } from '@/hooks/useAuth';
 import socket from '@/lib/socket';
 
 import ChatInput from './chat-input';
@@ -11,9 +12,8 @@ import Header from './header';
 import MessageBox from './message-box';
 
 export default function Index() {
-    const searchParams = useSearchParams();
     const { chatId } = useParams();
-    const user = searchParams.get('user');
+    const { user } = useAuth();
 
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState<IMessage[]>([]);
@@ -21,7 +21,7 @@ export default function Index() {
     useEffect(() => {
         if (!chatId) return;
 
-        socket.emit('joinRoom', { chatId, user });
+        socket.emit('joinRoom', { chatId, user: user?.id });
 
         socket.on('chat', (content) => {
             console.log(content);
@@ -40,6 +40,10 @@ export default function Index() {
         };
     }, [chatId, user]);
 
+    useEffect(() => {
+        
+    }, [])
+
     const handleSend = () => {
         if (!input.trim()) return;
 
@@ -55,8 +59,8 @@ export default function Index() {
 
     return (
         <div className="flex flex-col col-span-2">
-            <Header user={user} />
-            <MessageBox data={messages} user={user} />
+            <Header user={user?.name} />
+            <MessageBox data={messages} user={user?.id} />
             <ChatInput
                 handleSend={handleSend}
                 setInput={setInput}

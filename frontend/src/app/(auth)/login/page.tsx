@@ -5,13 +5,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { toast } from 'sonner';
-
 import Card from '@/components/card';
 import { Input } from '@/components/input';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
-import axios from '@/lib/axios';
+import { api } from '@/lib/axios';
+import { Toast } from '@/lib/toast';
+import { ILoginPostData, ILoginResponse } from '@/types/data';
 
 // assuming you set up useAuth
 
@@ -33,29 +33,21 @@ export default function Page() {
         setLoading(true);
 
         try {
-            const res = await axios.post('auth/login', formData);
+            const res = await api<ILoginPostData, ILoginResponse>({
+                type: 'post',
+                url: 'auth/login',
+                data: formData,
+            });
 
-            if (res.data.type === 'success') {
-                login(res.data.token); // save token into context + localStorage
-                toast.success(res.data.message, {
-                    position: 'top-center',
-                    duration: 4000,
-                });
+            if (res.data.toast.type === 'success') {
+                login(res.data.data.token);
+                Toast(res.data.toast);
                 router.push('/');
-            } else if (res.data.type === 'error') {
-                toast.error(res.data.message, {
-                    description: 'Error! Please try again',
-                    position: 'top-center',
-                    duration: 3000,
-                });
+            } else if (res.data.toast.type === 'error') {
+                Toast(res.data.toast);
             }
         } catch (error: unknown) {
-            console.error('Login error:', error);
-            toast.error('Something went wrong!', {
-                description: 'Error! Please try again',
-                position: 'top-center',
-                duration: 3000,
-            });
+            console.log('Login error:', error);
         } finally {
             setLoading(false);
         }

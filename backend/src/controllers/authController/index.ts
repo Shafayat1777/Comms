@@ -3,12 +3,11 @@ import { Request, Response } from 'express';
 
 import { getUser, insertUser } from '../../models/userModel';
 import { generateToken } from '../../utils/jwtUtils';
+import { registerSchema } from './zod';
 
 export const register = async (req: Request, res: Response) => {
-    const { name, email, password } = req.body;
-    console.log(req.body);
-
     try {
+        const { name, email, password } = registerSchema.parse(req.body);
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = { name, email, password: hashedPassword };
@@ -16,11 +15,21 @@ export const register = async (req: Request, res: Response) => {
         const result = await insertUser(user);
 
         res.status(201).json({
-            message: 'User registered successfully',
-            type: 'success',
+            toast: {
+                type: 'success',
+                status: 201,
+                message: 'User registered successfully!',
+            },
         });
     } catch (error: any) {
-        res.status(400).json({ error: error.message, type: 'error' });
+        res.status(200).json({
+            toast: {
+                type: 'error',
+                status: 409,
+                message: error.message,
+                error: error,
+            },
+        });
     }
 };
 
@@ -40,16 +49,27 @@ export const login = async (req: Request, res: Response) => {
             email: user.email,
             role: user.role,
         });
-        console.log(user);
         req.session.user = token;
 
         res.status(200).json({
-            message: 'User logged in successfully',
-            token,
-            type: 'success',
+            data: {
+                token,
+            },
+            toast: {
+                type: 'success',
+                status: 200,
+                message: 'User logged in successfully',
+            },
         });
     } catch (error: any) {
-        res.status(401).json({ error: error.message, type: 'error' });
+        res.status(200).json({
+            toast: {
+                type: 'error',
+                status: 401,
+                message: error.message,
+                error: error,
+            },
+        });
     }
 };
 
